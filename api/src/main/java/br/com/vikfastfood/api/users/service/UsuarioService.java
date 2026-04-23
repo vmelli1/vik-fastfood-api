@@ -4,6 +4,7 @@ package br.com.vikfastfood.api.users.service;
 import br.com.vikfastfood.api.users.dto.Usuario.UsuarioRequestDto;
 import br.com.vikfastfood.api.users.dto.Usuario.UsuarioRequestNovaSenhaDto;
 import br.com.vikfastfood.api.users.dto.Usuario.UsuarioResponseDto;
+import br.com.vikfastfood.api.users.dto.Usuario.UsuarioResponseNovaSenhaDto;
 import br.com.vikfastfood.api.users.model.Estabelecimento;
 import br.com.vikfastfood.api.users.model.Usuario;
 import br.com.vikfastfood.api.users.repository.EstabelecimentoRepository;
@@ -63,7 +64,7 @@ public class UsuarioService {
         );
     }
 
-    public void alterarSenha(UsuarioRequestNovaSenhaDto dto){
+    public UsuarioResponseNovaSenhaDto alterarSenha(UsuarioRequestNovaSenhaDto dto){
         Usuario usuario = usuarioRepository.findByEmail(dto.email())
             .orElseThrow(() -> new RuntimeException("Credencial inválida"));
 
@@ -80,6 +81,11 @@ public class UsuarioService {
         usuario.setPrimeiroAcesso(false);
 
         usuarioRepository.save(usuario);
+
+        return new UsuarioResponseNovaSenhaDto(
+                usuario.getEmail(),
+                usuario.getSenha()
+        );
 
     }
 }

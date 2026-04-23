@@ -5,16 +5,24 @@ import br.com.vikfastfood.api.users.dto.estabelecimento.EstabelecimentoResponseD
 import br.com.vikfastfood.api.users.model.Estabelecimento;
 import br.com.vikfastfood.api.users.repository.EstabelecimentoRepository;
 import jakarta.transaction.Transactional;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
+@Slf4j
 @Service
 public class EstabelecimentoService {
     @Autowired
     private EstabelecimentoRepository repository;
     @Transactional
     public EstabelecimentoResponseDto cadastrar(EstabelecimentoRequestDto dto){
-        if(repository.existsByCnpj(dto.cnpj())){
+
+        String cnpjLimpo = dto.cnpj().replaceAll("\\D", "");
+
+        if(repository.existsByCnpj(cnpjLimpo)){
+            log.error("Usuario esta tentando cadastrar com um CNPJ EXISTENTE: {}", dto.cnpj());
             throw new RuntimeException("Já existe um estabelecimento com este CNPJ.");
         }
 
@@ -27,6 +35,7 @@ public class EstabelecimentoService {
         Estabelecimento salvar = repository.save(estabelecimento);
 
         return new EstabelecimentoResponseDto(
+                salvar.getId(),
                 salvar.getNome(),
                 salvar.getCnpj(),
                 salvar.getWhatsapp(),
