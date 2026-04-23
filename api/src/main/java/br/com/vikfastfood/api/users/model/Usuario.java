@@ -2,7 +2,6 @@ package br.com.vikfastfood.api.users.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.boot.models.annotations.internal.ColumnsAnnotation;
 
 import java.util.Objects;
 import java.util.UUID;

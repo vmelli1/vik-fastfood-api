@@ -2,7 +2,6 @@ package br.com.vikfastfood.api.users.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.validator.constraints.br.CNPJ;
 
 
 import java.math.BigDecimal;

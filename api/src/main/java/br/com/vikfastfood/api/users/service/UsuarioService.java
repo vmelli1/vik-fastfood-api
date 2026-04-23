@@ -4,7 +4,9 @@ package br.com.vikfastfood.api.users.service;
 import br.com.vikfastfood.api.users.dto.Usuario.UsuarioRequestDto;
 import br.com.vikfastfood.api.users.dto.Usuario.UsuarioRequestNovaSenhaDto;
 import br.com.vikfastfood.api.users.dto.Usuario.UsuarioResponseDto;
+import br.com.vikfastfood.api.users.model.Estabelecimento;
 import br.com.vikfastfood.api.users.model.Usuario;
+import br.com.vikfastfood.api.users.repository.EstabelecimentoRepository;
 import br.com.vikfastfood.api.users.repository.UsuarioRepository;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -17,8 +19,13 @@ import org.springframework.stereotype.Service;
 public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
+    private final EstabelecimentoRepository estabelecimentoRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    public UsuarioService(EstabelecimentoRepository estabelecimentoRepository) {
+        this.estabelecimentoRepository = estabelecimentoRepository;
+    }
 
     @Transactional
     public UsuarioResponseDto cadastrar(UsuarioRequestDto dto){
@@ -27,11 +34,13 @@ public class UsuarioService {
         }
 
         Usuario usuario = new Usuario();
+        Estabelecimento est = estabelecimentoRepository.findById(dto.estabelecimentoId()).orElseThrow(()-> new RuntimeException("Estabelecimento não encontrado"));
 
         usuario.setEmail(dto.email());
         String senhaCriptografada = passwordEncoder.encode(dto.senha());
         usuario.setSenha(senhaCriptografada);
         usuario.setPrimeiroAcesso(true);
+        usuario.setEstabelecimento(est);
         Usuario salvar = usuarioRepository.save(usuario);
 
         return new UsuarioResponseDto(
