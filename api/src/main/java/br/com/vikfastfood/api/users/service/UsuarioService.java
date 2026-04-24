@@ -31,6 +31,7 @@ public class UsuarioService {
     @Transactional
     public UsuarioResponseDto cadastrar(UsuarioRequestDto dto){
         if (usuarioRepository.existsByEmail(dto.email())){
+            log.error("Cliente está tentando um email ja cadastrado: {}", dto.email());
             throw new RuntimeException("Email já cadastrado");
         }
 
@@ -55,6 +56,7 @@ public class UsuarioService {
                 .orElseThrow(() -> new RuntimeException("Credenciais inválidas"));
 
         if(!passwordEncoder.matches(dto.senha(), usuario.getSenha())){
+            log.error("Cliente inserindo a senha incorreta: {}", dto.senha());
             throw new RuntimeException("Credenciais inválidas");
         }
 

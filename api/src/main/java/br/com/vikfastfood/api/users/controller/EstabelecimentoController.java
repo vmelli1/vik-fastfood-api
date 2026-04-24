@@ -4,6 +4,8 @@ import br.com.vikfastfood.api.users.dto.estabelecimento.EstabelecimentoRequestDt
 import br.com.vikfastfood.api.users.dto.estabelecimento.EstabelecimentoResponseDto;
 import br.com.vikfastfood.api.users.service.EstabelecimentoService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.Array;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("estabelecimentos")
 @CrossOrigin(origins = "*")
+@RequiredArgsConstructor
 public class EstabelecimentoController {
     @Autowired
     private EstabelecimentoService estabelecimentoService;

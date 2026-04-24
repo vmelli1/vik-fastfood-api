@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.net.URL;
 import java.util.UUID;
 @Data
 @NoArgsConstructor
@@ -34,8 +33,6 @@ public class Produto {
     @ManyToOne
     @JoinColumn(name = "estabelecimento_id")
     private Estabelecimento estabelecimento;
-
-
 
 
 }
