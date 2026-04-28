@@ -11,7 +11,7 @@ public interface CategoriaRepository extends JpaRepository<Categoria, UUID> {
 
     boolean existsByNomeAndEstabelecimentoId(String nome, UUID estabelecimentoId);
 
-    Optional<Categoria> findByCategoria(String nome);
+
 
 
 }

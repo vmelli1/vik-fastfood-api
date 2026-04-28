@@ -9,11 +9,14 @@ import br.com.vikfastfood.api.users.model.Estabelecimento;
 import br.com.vikfastfood.api.users.model.Usuario;
 import br.com.vikfastfood.api.users.repository.EstabelecimentoRepository;
 import br.com.vikfastfood.api.users.repository.UsuarioRepository;
+import br.com.vikfastfood.api.users.validation.Validar;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Slf4j
 @Service
@@ -23,6 +26,8 @@ public class UsuarioService {
     private final EstabelecimentoRepository estabelecimentoRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private List<Validar> validar;
 
     public UsuarioService(EstabelecimentoRepository estabelecimentoRepository) {
         this.estabelecimentoRepository = estabelecimentoRepository;
@@ -30,25 +35,27 @@ public class UsuarioService {
 
     @Transactional
     public UsuarioResponseDto cadastrar(UsuarioRequestDto dto){
-        if (usuarioRepository.existsByEmail(dto.email())){
-            log.error("Cliente está tentando um email ja cadastrado: {}", dto.email());
-            throw new RuntimeException("Email já cadastrado");
-        }
+        //Validacoes de cadastro, exemplo : EMAIL - SENHAS ETC
+        validar.forEach(v -> v.validar(dto));
 
-        Usuario usuario = new Usuario();
+        // Relacionamente entre o estabelecimento e usuarios
         Estabelecimento est = estabelecimentoRepository.findById(dto.estabelecimentoId()).orElseThrow(()-> new RuntimeException("Estabelecimento não encontrado"));
-
-        usuario.setEmail(dto.email());
         String senhaCriptografada = passwordEncoder.encode(dto.senha());
-        usuario.setSenha(senhaCriptografada);
-        usuario.setPrimeiroAcesso(true);
-        usuario.setEstabelecimento(est);
+
+        // cadastro Usuario, com Integracao do estabelicimento
+        Usuario usuario = Usuario.builder()
+                .email(dto.email())
+                .senha(senhaCriptografada)
+                .primeiroAcesso(true)
+                .estabelecimento(est)
+                .build();
+        est.getUsuarios().add(usuario);
         Usuario salvar = usuarioRepository.save(usuario);
 
-        return new UsuarioResponseDto(
-                salvar.getEmail(),
-                salvar.isPrimeiroAcesso()
-        );
+        return  UsuarioResponseDto.builder()
+                .email(salvar.getEmail())
+                .primeiroAcesso(salvar.isPrimeiroAcesso())
+                .build();
     }
 
     public UsuarioResponseDto login(UsuarioRequestDto dto){

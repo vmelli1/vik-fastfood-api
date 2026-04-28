@@ -10,6 +10,7 @@ import br.com.vikfastfood.api.users.repository.EstabelecimentoRepository;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -17,10 +18,9 @@ import java.util.UUID;
 @Slf4j
 @Service
 public class CategoriaService {
-
+    @Autowired
     private final CategoriaRepository repository;
-
-
+    @Autowired
     private final EstabelecimentoRepository estabelecimentoRepository;
 
     public CategoriaService(CategoriaRepository repository, EstabelecimentoRepository estabelecimentoRepository) {
