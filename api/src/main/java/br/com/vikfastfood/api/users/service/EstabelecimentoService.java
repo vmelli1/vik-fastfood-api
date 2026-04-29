@@ -26,20 +26,23 @@ public class EstabelecimentoService {
             throw new RuntimeException("Já existe um estabelecimento com este CNPJ.");
         }
 
-        Estabelecimento estabelecimento = new Estabelecimento();
-        estabelecimento.setNome(dto.nome());
-        estabelecimento.setCnpj(dto.cnpj());
-        estabelecimento.setWhatsapp(dto.whatsapp());
-        estabelecimento.setEndereco(dto.endereco());
-        estabelecimento.setTaxaEntrega(dto.taxaEntrega());
+
+        Estabelecimento  estabelecimento  = Estabelecimento.builder()
+                .nome(dto.nome())
+                .cnpj(dto.cnpj())
+                .whatsapp(dto.whatsapp())
+                .endereco(dto.endereco())
+                .taxaEntrega(dto.taxaEntrega())
+                .build();
+
         Estabelecimento salvar = repository.save(estabelecimento);
 
-        return new EstabelecimentoResponseDto(
-                salvar.getId(),
-                salvar.getNome(),
-                salvar.getCnpj(),
-                salvar.getWhatsapp(),
-                salvar.getEndereco()
-        );
+        return  EstabelecimentoResponseDto.builder()
+                .id(salvar.getId())
+                .nome(salvar.getNome())
+                .cnpj(salvar.getCnpj())
+                .whatsapp(salvar.getWhatsapp())
+                .endereco(salvar.getEndereco())
+                .build();
     }
 }
