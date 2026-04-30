@@ -14,6 +14,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Table(name = "estabelecimentos")
 public class Estabelecimento {
     @Id
@@ -36,7 +37,7 @@ public class Estabelecimento {
 
 
     @OneToMany(mappedBy = "estabelecimento", cascade = CascadeType.ALL, orphanRemoval = true) // orphanRemoval para garantir que os usuários sejam removidos quando o estabelecimento for deletado
-    List<Usuario> usuarios = new ArrayList<>();
+    List<UsuarioEstabelecimento> usuarios = new ArrayList<>();
 
     public void setNome(String nome) {
         this.nome = nome;

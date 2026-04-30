@@ -6,7 +6,7 @@ import br.com.vikfastfood.api.users.dto.Usuario.UsuarioRequestNovaSenhaDto;
 import br.com.vikfastfood.api.users.dto.Usuario.UsuarioResponseDto;
 import br.com.vikfastfood.api.users.dto.Usuario.UsuarioResponseNovaSenhaDto;
 import br.com.vikfastfood.api.users.model.Estabelecimento;
-import br.com.vikfastfood.api.users.model.Usuario;
+import br.com.vikfastfood.api.users.model.UsuarioEstabelecimento;
 import br.com.vikfastfood.api.users.repository.EstabelecimentoRepository;
 import br.com.vikfastfood.api.users.repository.UsuarioRepository;
 import br.com.vikfastfood.api.users.validation.Validar;
@@ -43,14 +43,14 @@ public class UsuarioService {
         String senhaCriptografada = passwordEncoder.encode(dto.senha());
 
         // cadastro Usuario, com Integracao do estabelicimento
-        Usuario usuario = Usuario.builder()
+        UsuarioEstabelecimento usuario = UsuarioEstabelecimento.builder()
                 .email(dto.email())
                 .senha(senhaCriptografada)
                 .primeiroAcesso(true)
                 .estabelecimento(est)
                 .build();
         est.getUsuarios().add(usuario);
-        Usuario salvar = usuarioRepository.save(usuario);
+        UsuarioEstabelecimento salvar = usuarioRepository.save(usuario);
 
         return  UsuarioResponseDto.builder()
                 .email(salvar.getEmail())
@@ -59,7 +59,7 @@ public class UsuarioService {
     }
 
     public UsuarioResponseDto login(UsuarioRequestDto dto){
-        Usuario usuario = usuarioRepository.findByEmail(dto.email())
+        UsuarioEstabelecimento usuario = usuarioRepository.findByEmail(dto.email())
                 .orElseThrow(() -> new RuntimeException("Credenciais inválidas"));
 
         if(!passwordEncoder.matches(dto.senha(), usuario.getSenha())){
@@ -74,7 +74,7 @@ public class UsuarioService {
     }
 
     public UsuarioResponseNovaSenhaDto alterarSenha(UsuarioRequestNovaSenhaDto dto){
-        Usuario usuario = usuarioRepository.findByEmail(dto.email())
+        UsuarioEstabelecimento usuario = usuarioRepository.findByEmail(dto.email())
             .orElseThrow(() -> new RuntimeException("Credencial inválida"));
 
         if(!usuario.isPrimeiroAcesso()){

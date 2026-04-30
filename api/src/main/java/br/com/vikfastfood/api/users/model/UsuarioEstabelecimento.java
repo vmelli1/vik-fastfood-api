@@ -13,7 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table (name = "usuarios")
-public class Usuario {
+public class UsuarioEstabelecimento {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(columnDefinition  = "BINARY(16)")
@@ -65,7 +65,7 @@ public class Usuario {
     @Override
     public boolean equals(Object object) {
         if (object == null || getClass() != object.getClass()) return false;
-        Usuario usuario = (Usuario) object;
+        UsuarioEstabelecimento usuario = (UsuarioEstabelecimento) object;
         return Objects.equals(id, usuario.id);
     }
 

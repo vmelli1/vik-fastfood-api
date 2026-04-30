@@ -1,13 +1,10 @@
-package br.com.vikfastfood.api.orders.model;
+package br.com.vikfastfood.api.users.model;
 
-import br.com.vikfastfood.api.users.model.Estabelecimento;
+import br.com.vikfastfood.api.orders.model.Produto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.io.Serializable;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +16,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Table(name = "categorias")
 
-public class Categoria {
+public class CategoriaEstabelecimento {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(columnDefinition = "BINARY(16)")
