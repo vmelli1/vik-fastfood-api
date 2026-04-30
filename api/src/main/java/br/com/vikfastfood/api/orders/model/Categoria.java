@@ -27,7 +27,6 @@ public class Categoria {
     @Column(nullable = false)
     private String nome;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "estabelecimento_id")
     private Estabelecimento estabelecimento;
 
     @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, orphanRemoval = true)

@@ -1,4 +1,8 @@
 package br.com.vikfastfood.api.orders.dto.categoria;
 
-public record CategoriaDeletarRequest() {
+import java.util.UUID;
+
+public record CategoriaDeletarRequest(
+        UUID id
+) {
 }
