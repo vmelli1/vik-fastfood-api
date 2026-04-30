@@ -67,6 +67,10 @@ public class UsuarioService {
             throw new RuntimeException("Credenciais inválidas");
         }
 
+        if(!dto.estabelecimentoId().equals(usuario.getEstabelecimento().getId())) {
+            throw new RuntimeException("Credenciais inválidas");
+        }
+
         return new UsuarioResponseDto(
                 usuario.getEmail(),
                 usuario.isPrimeiroAcesso()
