@@ -1,10 +1,7 @@
 package br.com.vikfastfood.api.users.service;
 
 
-import br.com.vikfastfood.api.users.dto.Usuario.UsuarioRequestDto;
-import br.com.vikfastfood.api.users.dto.Usuario.UsuarioRequestNovaSenhaDto;
-import br.com.vikfastfood.api.users.dto.Usuario.UsuarioResponseDto;
-import br.com.vikfastfood.api.users.dto.Usuario.UsuarioResponseNovaSenhaDto;
+import br.com.vikfastfood.api.users.dto.Usuario.*;
 import br.com.vikfastfood.api.users.model.Estabelecimento;
 import br.com.vikfastfood.api.users.model.UsuarioEstabelecimento;
 import br.com.vikfastfood.api.users.repository.EstabelecimentoRepository;
@@ -34,7 +31,7 @@ public class UsuarioService {
     }
 
     @Transactional
-    public UsuarioResponseDto cadastrar(UsuarioRequestDto dto){
+    public UsuarioResponseDto cadastrar(UsuarioCadastroRequest dto){
         //Validacoes de cadastro, exemplo : EMAIL - SENHAS ETC
         validar.forEach(v -> v.validar(dto));
 
@@ -67,13 +64,10 @@ public class UsuarioService {
             throw new RuntimeException("Credenciais inválidas");
         }
 
-        if(!dto.estabelecimentoId().equals(usuario.getEstabelecimento().getId())) {
-            throw new RuntimeException("Credenciais inválidas");
-        }
-
         return new UsuarioResponseDto(
                 usuario.getEmail(),
-                usuario.isPrimeiroAcesso()
+                usuario.isPrimeiroAcesso(),
+                usuario.getEstabelecimento().getId()
         );
     }
 
