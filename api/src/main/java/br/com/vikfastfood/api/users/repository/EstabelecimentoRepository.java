@@ -10,5 +10,5 @@ public interface EstabelecimentoRepository extends JpaRepository<Estabelecimento
     boolean existsByCnpj(String cnpj);
 
     Estabelecimento findByNome(String nome);
-    Optional<Estabelecimento> findById(UUID estabelecimentoId);
+
 }
