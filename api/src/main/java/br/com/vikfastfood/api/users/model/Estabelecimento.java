@@ -38,6 +38,8 @@ public class Estabelecimento {
 
     @OneToMany(mappedBy = "estabelecimento", cascade = CascadeType.ALL, orphanRemoval = true) // orphanRemoval para garantir que os usuários sejam removidos quando o estabelecimento for deletado
     List<UsuarioEstabelecimento> usuarios = new ArrayList<>();
+    @OneToMany(mappedBy = "estabelecimento",  cascade = CascadeType.ALL, orphanRemoval = true)
+    List<ProdutoEstabelecimento> produtos = new ArrayList<>();
 
     public void setNome(String nome) {
         this.nome = nome;

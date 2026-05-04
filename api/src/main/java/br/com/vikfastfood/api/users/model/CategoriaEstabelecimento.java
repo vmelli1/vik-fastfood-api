@@ -1,6 +1,6 @@
 package br.com.vikfastfood.api.users.model;
 
-import br.com.vikfastfood.api.orders.model.Produto;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,5 +27,5 @@ public class CategoriaEstabelecimento {
     private Estabelecimento estabelecimento;
 
     @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Produto> produtos= new ArrayList<>();
+    private List<ProdutoEstabelecimento> produtos= new ArrayList<>();
 }

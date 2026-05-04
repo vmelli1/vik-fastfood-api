@@ -1,19 +1,21 @@
-package br.com.vikfastfood.api.orders.model;
+package br.com.vikfastfood.api.users.model;
 
-import br.com.vikfastfood.api.users.model.Estabelecimento;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.UUID;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "produtos")
-public class Produto {
+public class ProdutoEstabelecimento {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column (columnDefinition = "BINARY(16)")
@@ -28,7 +30,7 @@ public class Produto {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "categoria_id")
-    private Categoria categoria;
+    private CategoriaEstabelecimento categoria;
 
     @ManyToOne
     @JoinColumn(name = "estabelecimento_id")
