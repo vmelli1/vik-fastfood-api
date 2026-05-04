@@ -8,7 +8,6 @@ import java.util.UUID;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record UsuarioRequestDto(
     String email,
-    String senha,
-    UUID estabelecimentoId
+    String senha
 ) {
 }

@@ -1,4 +1,10 @@
 package br.com.vikfastfood.api.users.dto.Usuario;
 
-public record UsuarioCadastroRequest() {
+import java.util.UUID;
+
+public record UsuarioCadastroRequest(
+        String email,
+        String senha,
+        UUID estabelecimentoId
+) {
 }
