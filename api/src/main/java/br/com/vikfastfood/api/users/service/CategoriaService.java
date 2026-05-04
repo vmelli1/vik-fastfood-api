@@ -49,10 +49,11 @@ public class CategoriaService {
     }
 
     @Transactional
-    public CategoriaResponse atualizarCategoria(UUID id, CategoriaAtualizarRequest dto) {
+    public CategoriaResponse atualizarCategoria(CategoriaAtualizarRequest dto, UUID id) {
         CategoriaEstabelecimento categoriaExistente = repository.findById(id).orElseThrow(() -> new RuntimeException("Categoria  não encontrada! "));
 
         if(categoriaExistente.getNome().equalsIgnoreCase(dto.nome())){
+            log.warn("Categoria com mesmo nome: {} ", dto.nome());
             throw new IllegalArgumentException("Categoria com o mesmo nome, Insira outro nome para categoria: " + dto.nome());
         }
 
@@ -69,7 +70,7 @@ public class CategoriaService {
     }
 
     @Transactional
-    public void deletarCategoria(CategoriaDeletarRequest request) {
+    public CategoriaResponse deletarCategoria(CategoriaDeletarRequest request) {
         CategoriaEstabelecimento categoriaDeletar = repository.findById(request.id()).orElseThrow(() -> new RuntimeException("Categoria nao encontrada! "));
 
         if(!categoriaDeletar.getProdutos().isEmpty()){
@@ -78,6 +79,7 @@ public class CategoriaService {
             throw new RuntimeException("A produto vinculado dentro da categoria");
         }
         repository.delete(categoriaDeletar);
+        return null;
     }
 
     public List<CategoriaResponse> listarCategorias(UUID estabelecimentoId) {
