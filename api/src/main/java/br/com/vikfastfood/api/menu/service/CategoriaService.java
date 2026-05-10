@@ -1,12 +1,12 @@
-package br.com.vikfastfood.api.users.service;
+package br.com.vikfastfood.api.menu.service;
 
-import br.com.vikfastfood.api.users.dto.categoria.CategoriaAtualizarRequest;
-import br.com.vikfastfood.api.users.dto.categoria.CategoriaDeletarRequest;
-import br.com.vikfastfood.api.users.dto.categoria.CategoriaRequest;
-import br.com.vikfastfood.api.users.dto.categoria.CategoriaResponse;
-import br.com.vikfastfood.api.users.model.CategoriaEstabelecimento;
+import br.com.vikfastfood.api.menu.dto.categoria.CategoriaAtualizarRequest;
+import br.com.vikfastfood.api.menu.dto.categoria.CategoriaDeletarRequest;
+import br.com.vikfastfood.api.menu.dto.categoria.CategoriaRequest;
+import br.com.vikfastfood.api.menu.dto.categoria.CategoriaResponse;
+import br.com.vikfastfood.api.menu.model.CategoriaEstabelecimento;
 import br.com.vikfastfood.api.users.model.Estabelecimento;
-import br.com.vikfastfood.api.users.repository.CategoriaRepository;
+import br.com.vikfastfood.api.menu.repository.CategoriaRepository;
 import br.com.vikfastfood.api.users.repository.EstabelecimentoRepository;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -72,6 +72,12 @@ public class CategoriaService {
     @Transactional
     public CategoriaResponse deletarCategoria(CategoriaDeletarRequest request) {
         CategoriaEstabelecimento categoriaDeletar = repository.findById(request.id()).orElseThrow(() -> new RuntimeException("Categoria nao encontrada! "));
+
+        if(!categoriaDeletar.getEstabelecimento().getId().equals(request.estabelecimentoId())){
+            log.warn("ALERTA DE SEGURANÇA: Tentativa de deletar categoria de outro estabelecimento!");
+            throw new RuntimeException("Operação não permitida: Esta categoria não pertence ao seu estabelecimento.");
+        }
+
 
         if(!categoriaDeletar.getProdutos().isEmpty()){
             log.warn("Tentativa de exclusão negada: Categoria '{}' (ID: {}) possui produtos ativos.",

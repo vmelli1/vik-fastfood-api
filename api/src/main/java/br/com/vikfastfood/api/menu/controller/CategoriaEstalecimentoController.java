@@ -1,11 +1,11 @@
-package br.com.vikfastfood.api.users.controller;
+package br.com.vikfastfood.api.menu.controller;
 
 
-import br.com.vikfastfood.api.users.dto.categoria.CategoriaAtualizarRequest;
-import br.com.vikfastfood.api.users.dto.categoria.CategoriaDeletarRequest;
-import br.com.vikfastfood.api.users.dto.categoria.CategoriaRequest;
-import br.com.vikfastfood.api.users.dto.categoria.CategoriaResponse;
-import br.com.vikfastfood.api.users.service.CategoriaService;
+import br.com.vikfastfood.api.menu.dto.categoria.CategoriaAtualizarRequest;
+import br.com.vikfastfood.api.menu.dto.categoria.CategoriaDeletarRequest;
+import br.com.vikfastfood.api.menu.dto.categoria.CategoriaRequest;
+import br.com.vikfastfood.api.menu.dto.categoria.CategoriaResponse;
+import br.com.vikfastfood.api.menu.service.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

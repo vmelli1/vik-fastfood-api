@@ -1,9 +1,9 @@
-package br.com.vikfastfood.api.users.controller;
+package br.com.vikfastfood.api.menu.controller;
 
-import br.com.vikfastfood.api.users.dto.Produto.CadastrarProdutoRequestDto;
-import br.com.vikfastfood.api.users.dto.Produto.CadastrarProdutoResponseDto;
-import br.com.vikfastfood.api.users.dto.Produto.VisualizarProdutoResponseDto;
-import br.com.vikfastfood.api.users.service.ProdutoEstabelecimentoService;
+import br.com.vikfastfood.api.menu.dto.Produto.CadastrarProdutoRequestDto;
+import br.com.vikfastfood.api.menu.dto.Produto.CadastrarProdutoResponseDto;
+import br.com.vikfastfood.api.menu.dto.Produto.VisualizarProdutoResponseDto;
+import br.com.vikfastfood.api.menu.service.ProdutoEstabelecimentoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,4 +35,5 @@ public class ProdutoController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
 }

@@ -1,4 +1,4 @@
-package br.com.vikfastfood.api.users.dto.Produto;
+package br.com.vikfastfood.api.menu.dto.Produto;
 
 import lombok.Builder;
 

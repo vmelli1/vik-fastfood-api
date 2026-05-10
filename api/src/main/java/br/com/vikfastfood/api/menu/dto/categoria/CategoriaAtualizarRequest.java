@@ -1,4 +1,4 @@
-package br.com.vikfastfood.api.users.dto.categoria;
+package br.com.vikfastfood.api.menu.dto.categoria;
 
 import java.util.UUID;
 

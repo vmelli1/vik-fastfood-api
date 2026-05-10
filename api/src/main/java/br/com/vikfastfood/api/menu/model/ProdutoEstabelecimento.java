@@ -1,5 +1,7 @@
-package br.com.vikfastfood.api.users.model;
+package br.com.vikfastfood.api.menu.model;
 
+import br.com.vikfastfood.api.menu.dto.Produto.AtualizarProdutoRequest;
+import br.com.vikfastfood.api.users.model.Estabelecimento;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,6 +37,14 @@ public class ProdutoEstabelecimento {
     @ManyToOne
     @JoinColumn(name = "estabelecimento_id")
     private Estabelecimento estabelecimento;
+
+    public void atualizar(AtualizarProdutoRequest dto) {
+        this.nome = dto.nome();
+        this.descricao = dto.descricao();
+        this.preco = dto.preco();
+        this.custo = dto.custo();
+        this.urlImagem = dto.urlImagem();
+    }
 
 
 }

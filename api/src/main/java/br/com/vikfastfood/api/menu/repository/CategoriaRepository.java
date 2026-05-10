@@ -1,6 +1,6 @@
-package br.com.vikfastfood.api.users.repository;
+package br.com.vikfastfood.api.menu.repository;
 
-import br.com.vikfastfood.api.users.model.CategoriaEstabelecimento;
+import br.com.vikfastfood.api.menu.model.CategoriaEstabelecimento;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
