@@ -23,7 +23,7 @@ public class Pedido {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(columnDefinition = "BINARY(16)") // Usando UUID como tipo de dado para o ID
     private UUID id;
-    private LocalDateTime data;
+    private LocalDateTime data = LocalDateTime.now();
     @Column(nullable = false)
     private String clienteNome;
     @Column(nullable = false)

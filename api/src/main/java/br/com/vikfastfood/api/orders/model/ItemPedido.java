@@ -19,8 +19,9 @@ public class ItemPedido {
     @Column(columnDefinition = "BINARY(16)") // oque isso faz?
     private UUID id;
 
-    @ManyToOne(fetch =  FetchType.LAZY)  @JoinColumn(name = "pedido_id")private Pedido pedido;
-    @ManyToOne(fetch = FetchType.LAZY)  @JoinColumn(name = "produto_id") private Produto produto;
+    @ManyToOne(fetch =  FetchType.LAZY)
+    @JoinColumn(name = "pedido_id")
+    private Pedido pedido;
 
     @Column(nullable = false)
     private int quantidade;
