@@ -19,7 +19,7 @@ import java.util.UUID;
 @Table(name = "categorias")
 public class CategoriaEstabelecimento {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(columnDefinition = "BINARY(16)")
     @EqualsAndHashCode.Include
     private UUID id;

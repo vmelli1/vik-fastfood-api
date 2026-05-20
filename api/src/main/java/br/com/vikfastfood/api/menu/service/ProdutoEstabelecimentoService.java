@@ -42,6 +42,7 @@ public class ProdutoEstabelecimentoService {
                 .descricao(dto.descricao())
                 .preco(dto.preco())
                 .custo(dto.custo())
+
                 .urlImagem(dto.urlImage())
                 .ativo(true)
                 .categoria(categoriaEstabelecimento)
