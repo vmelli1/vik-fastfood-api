@@ -26,8 +26,10 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Rodar teste
-      run: mvn test
+      run: |
+        cd api
+        mvn test
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Build com Maven
-      run: mvn -B package --file pom.xml
+      run: mvn -B package --file api/pom.xml
