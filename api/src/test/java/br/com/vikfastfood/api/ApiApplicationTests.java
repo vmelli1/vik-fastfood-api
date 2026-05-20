@@ -4,13 +4,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-@SpringBootTest(properties = {
-		"spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration"
-})
+@SpringBootTest(
+		classes = ApiApplication.class,
+		webEnvironment = SpringBootTest.WebEnvironment.NONE
+)
 class ApiApplicationTests {
-
 	@Test
-	void contextLoads() {
-	}
-
+	void contextLoads() {}
 }
