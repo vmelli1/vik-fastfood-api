@@ -1,5 +1,6 @@
 package br.com.vikfastfood.api.users.validation;
 
+import br.com.vikfastfood.api.users.dto.Usuario.UsuarioCadastroRequest;
 import br.com.vikfastfood.api.users.dto.Usuario.UsuarioRequestDto;
 import br.com.vikfastfood.api.users.repository.UsuarioRepository;
 import org.slf4j.Logger;
@@ -13,7 +14,7 @@ public class ValidacaoEmail implements Validar {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    public void validar(UsuarioRequestDto dto){
+    public void validar(UsuarioCadastroRequest dto){
         boolean validarEmail = usuarioRepository.existsByEmail(dto.email());
         if (validarEmail){
             log.error("Usuario tem email ja cadastrado: {}", dto.email());
