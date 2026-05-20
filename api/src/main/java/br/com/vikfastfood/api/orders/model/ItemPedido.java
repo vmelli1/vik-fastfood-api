@@ -1,14 +1,15 @@
 package br.com.vikfastfood.api.orders.model;
 
+import br.com.vikfastfood.api.menu.model.ProdutoEstabelecimento;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -22,6 +23,10 @@ public class ItemPedido {
     @ManyToOne(fetch =  FetchType.LAZY)
     @JoinColumn(name = "pedido_id")
     private Pedido pedido;
+
+    @ManyToOne(fetch =  FetchType.LAZY)
+    @JoinColumn(name = "produto_id")
+    private ProdutoEstabelecimento produto;
 
     @Column(nullable = false)
     private int quantidade;
