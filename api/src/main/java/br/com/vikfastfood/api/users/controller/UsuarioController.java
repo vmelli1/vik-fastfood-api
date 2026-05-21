@@ -1,9 +1,6 @@
 package br.com.vikfastfood.api.users.controller;
 
-import br.com.vikfastfood.api.users.dto.Usuario.UsuarioRequestDto;
-import br.com.vikfastfood.api.users.dto.Usuario.UsuarioRequestNovaSenhaDto;
-import br.com.vikfastfood.api.users.dto.Usuario.UsuarioResponseDto;
-import br.com.vikfastfood.api.users.dto.Usuario.UsuarioResponseNovaSenhaDto;
+import br.com.vikfastfood.api.users.dto.Usuario.*;
 import br.com.vikfastfood.api.users.service.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +16,7 @@ public class UsuarioController {
     private UsuarioService usuarioService;
 
     @PostMapping("/cadastro")
-    public ResponseEntity<UsuarioResponseDto> cadastroUsuario(@RequestBody @Valid UsuarioRequestDto dto) {
+    public ResponseEntity<UsuarioResponseDto> cadastroUsuario(@RequestBody @Valid UsuarioCadastroRequest dto) {
         try {
             UsuarioResponseDto resposta  = this.usuarioService.cadastrar(dto);
 

@@ -1,5 +1,6 @@
 package br.com.vikfastfood.api.users.model;
 
+import br.com.vikfastfood.api.menu.model.ProdutoEstabelecimento;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -7,24 +8,26 @@ import lombok.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(exclude = { "usuario", "produtos"})
 @Builder
 @Table(name = "estabelecimentos")
 public class Estabelecimento {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(columnDefinition = "BINARY(16)")
+    @EqualsAndHashCode.Include
     private UUID id;
 
     @Column(name = "nome", nullable = false) // nullable = false para garantir que o nome seja obrigatório
     private String nome;
-    @lombok.Setter
     @Column (name = "cnpj", nullable = false, unique = true) // unique = true para garantir que o CNPJ seja único
     private String cnpj;
     @Column(name = "whatsapp", nullable = false)
@@ -119,15 +122,5 @@ public class Estabelecimento {
     }
 
 
-    @Override
-    public boolean equals(Object object) {
-        if (object == null || getClass() != object.getClass()) return false;
-        Estabelecimento that = (Estabelecimento) object;
-        return Objects.equals(id, that.id);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
-    }
 }

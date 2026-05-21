@@ -8,32 +8,29 @@ import br.com.vikfastfood.api.users.repository.EstabelecimentoRepository;
 import br.com.vikfastfood.api.users.repository.UsuarioRepository;
 import br.com.vikfastfood.api.users.validation.Validar;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+// TODO: criar exceção de domínio
+
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class UsuarioService {
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepository;
     private final EstabelecimentoRepository estabelecimentoRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    private List<Validar> validar;
+    private final PasswordEncoder passwordEncoder;
+    private final List<Validar> validacoes;
 
-    public UsuarioService(EstabelecimentoRepository estabelecimentoRepository) {
-        this.estabelecimentoRepository = estabelecimentoRepository;
-    }
 
     @Transactional
     public UsuarioResponseDto cadastrar(UsuarioCadastroRequest dto){
         //Validacoes de cadastro, exemplo : EMAIL - SENHAS ETC
-        validar.forEach(v -> v.validar(dto));
+        validacoes.forEach(v -> v.validar(dto));
 
         // Relacionamente entre o estabelecimento e usuarios
         Estabelecimento est = estabelecimentoRepository.findById(dto.estabelecimentoId()).orElseThrow(()-> new RuntimeException("Estabelecimento não encontrado"));
@@ -46,7 +43,6 @@ public class UsuarioService {
                 .primeiroAcesso(true)
                 .estabelecimento(est)
                 .build();
-        est.getUsuarios().add(usuario);
         UsuarioEstabelecimento salvar = usuarioRepository.save(usuario);
 
         return  UsuarioResponseDto.builder()
@@ -60,7 +56,7 @@ public class UsuarioService {
                 .orElseThrow(() -> new RuntimeException("Credenciais inválidas"));
 
         if(!passwordEncoder.matches(dto.senha(), usuario.getSenha())){
-            log.error("Cliente inserindo a senha incorreta: {}", dto.senha());
+            log.error("Tentativa de login com senha incorreta para o email: {}", dto.email());
             throw new RuntimeException("Credenciais inválidas");
         }
 
@@ -71,6 +67,7 @@ public class UsuarioService {
         );
     }
 
+    @Transactional
     public UsuarioResponseNovaSenhaDto alterarSenha(UsuarioRequestNovaSenhaDto dto){
         UsuarioEstabelecimento usuario = usuarioRepository.findByEmail(dto.email())
             .orElseThrow(() -> new RuntimeException("Credencial inválida"));
@@ -80,18 +77,14 @@ public class UsuarioService {
                 log.error("Tentativa de alteração de senha falhou para o usuário: {}", usuario.getEmail());
                 throw new RuntimeException("Senha inválida");
             }
-
         }
 
         String novaSenha = passwordEncoder.encode(dto.novaSenha());
         usuario.setSenha(novaSenha);
         usuario.setPrimeiroAcesso(false);
 
-        usuarioRepository.save(usuario);
-
         return new UsuarioResponseNovaSenhaDto(
-                usuario.getEmail(),
-                usuario.getSenha()
+                usuario.getEmail()
         );
 
     }

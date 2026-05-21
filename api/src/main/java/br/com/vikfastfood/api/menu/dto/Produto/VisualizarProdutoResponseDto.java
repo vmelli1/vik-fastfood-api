@@ -12,5 +12,6 @@ public record VisualizarProdutoResponseDto(
         BigDecimal preco,
         BigDecimal custo,
         String urlImage
+
 ) {
 }

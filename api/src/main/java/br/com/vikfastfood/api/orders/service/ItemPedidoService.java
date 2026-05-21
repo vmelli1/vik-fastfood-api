@@ -12,6 +12,8 @@ import br.com.vikfastfood.api.orders.repository.ItemPedidoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+
 
 @Service
 public class ItemPedidoService {
@@ -36,12 +38,16 @@ public class ItemPedidoService {
                 .precoUnitario(produto.getPreco())
                 .build());
 
+        BigDecimal subTotal = pedido.getPrecoUnitario().multiply(new BigDecimal(dto.quantidade()));
+
         return new ItemPedidoResponse(
                 produto.getNome(),
                 pedido.getQuantidade(),
                 pedido.getObservacao(),
-                pedido.getPrecoUnitario()
+                pedido.getPrecoUnitario(),
+                subTotal
         );
+
 
     }
 }
